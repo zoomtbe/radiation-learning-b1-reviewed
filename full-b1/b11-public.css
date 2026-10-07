@@ -1,0 +1,105 @@
+/* B1.1 public deploy — technical presentation fixes only (owner request, 7 October 2026).
+   Reviewed lesson text, visuals, audio and logic are unchanged. */
+
+/* Icons: inline SVG in every control (no emoji / platform-dependent glyphs) */
+.ico{width:1.25em;height:1.25em;display:block;flex:none}
+.player button{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:none}
+.player .play{flex:none;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;padding:0}
+.player .play .ico{width:26px;height:26px}
+.player .play[data-state="paused"] .ico-pause,.player .play[data-state="playing"] .ico-play{display:none}
+#previous,#replay{width:44px;height:44px;min-width:44px;padding:0}
+#next{white-space:nowrap}
+.ico-wrap{display:inline-flex}
+#reader-close{width:40px;height:40px;padding:0;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.player select{flex:none}
+#cc{flex:none;min-width:44px}
+#time{flex:none}
+.seek-label{min-width:120px}
+
+/* iOS safe areas: nothing under the home indicator or behind the notch */
+main{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:calc(15px + env(safe-area-inset-bottom))}
+
+/* Portrait screens up to 900 px wide (phones, tablets held upright): stacked composition.
+   The lesson visual takes the full stage width in normal document flow at its designed text sizes, and Emilia (with any
+   colleague) stands in a band below it — face, arms and hands in view. The page scrolls vertically as one page: no
+   nested scroll area in the stage, nothing under sticky bars. Landscape phones/tablets and laptops keep the original
+   side-by-side composition. */
+@media (max-width:900px) and (orientation:portrait){
+  html,body{overflow-x:hidden}
+  main{height:auto;min-height:0;width:100%;padding:10px 12px calc(14px + env(safe-area-inset-bottom));gap:8px}
+  .topbar{padding:0 12px}
+  .lesson-heading{min-height:0;align-items:flex-start}
+  h1{font-size:19px}
+  #stage{flex:none;height:auto;min-height:0;max-height:none;display:grid;grid-template-rows:auto var(--band,330px);background-position:center bottom}
+  #stage::after{content:"";display:block;height:var(--band,330px)}
+  main #stage#stage #visual,main #stage#stage.without-presenter #visual,main #stage#stage.has-participant #visual,main #stage#stage[data-scene] #visual,main #stage#stage:has(.bram-request) #visual{position:static;inset:auto;width:100%;display:block;padding:10px 10px 6px}
+  #visual>*{min-width:0}
+  #visual *{grid-template-columns:1fr!important;flex-wrap:wrap}
+  #visual .visual-frame,#visual .image-wrap,#visual .page-layout,#visual .bunker-frame,#visual .map-box{height:auto}
+  #visual .bunker-frame svg,#visual .site-plan svg{height:auto}
+  #visual .paper{height:auto;width:min(100%,420px);margin:0 auto}
+  #visual .figure-caption{position:static;margin-top:8px}
+  #visual img,#visual svg{max-width:100%}
+  main #stage#stage #presenter,main #stage#stage.has-participant #presenter,main #stage#stage[data-scene] #presenter{position:absolute;top:auto;bottom:1%;left:2%;height:calc(var(--band,330px) - 8px);width:auto;max-height:none}
+  #cast{position:absolute;inset:auto 0 0 0;height:var(--band,330px)}
+  #cast .person{height:86%!important;max-height:calc(var(--band,330px) - 14px)!important;bottom:2%!important;top:auto!important;transform-origin:50% 100%}
+  .person-name{font-size:12px}
+  #activity{position:static;inset:auto;width:100%;padding:14px 14px;justify-content:flex-start;margin:8px 0 0}
+  #stage.question-mode #visual{display:none}
+  #stage.question-mode #presenter{opacity:1;visibility:visible}
+  #stage.question-mode #cast{opacity:0}
+  #status-controls{position:absolute;right:3%;bottom:auto;top:calc(100% - var(--band,330px) + 8px)}
+  #captions{min-height:0;max-height:none;font-size:16px;padding:6px 4px}
+  .lesson-detail{flex-wrap:wrap;gap:6px}
+  .player{flex-wrap:wrap;gap:8px 10px;padding:10px 10px}
+  .seek-label{flex:1 1 100%;order:10;min-width:0}
+  #time{order:11;flex:1 1 auto;text-align:left}
+  #next{margin-left:auto}
+  .explore-items{flex-direction:column}.explore-items button{min-height:44px}
+  .explore-document-preview{max-height:none}
+  .document-choices{flex-direction:column}.document-choices button{min-height:0;padding:12px}
+  dialog{width:96vw;padding:16px;max-height:90dvh}
+  #reader-body .contents-grid{grid-template-columns:1fr}
+}
+/* Bram's workshop (S05): full-bleed photo composition becomes a framed picture with its notes beneath */
+@media (max-width:900px) and (orientation:portrait){
+  main #stage#stage.bram-workshop-scene #visual{position:static;inset:auto;padding:10px}
+  main #stage#stage.bram-workshop-scene .bram-request{position:relative;inset:auto}
+  main #stage#stage.bram-workshop-scene .br-workshop{position:relative;inset:auto;border-radius:12px;box-shadow:0 8px 20px #213c3a15}
+  main #stage#stage.bram-workshop-scene .br-workshop>img{height:auto;object-fit:contain}
+  main #stage#stage.bram-workshop-scene .br-heading,main #stage#stage.bram-workshop-scene .br-company-line,main #stage#stage.bram-workshop-scene .br-measures,main #stage#stage.bram-workshop-scene .br-note{position:static;inset:auto;margin:10px 0 0}
+  main #stage#stage.bram-workshop-scene .br-heading{margin:0 0 10px}
+}
+@media (max-width:640px) and (orientation:portrait){
+  #stage{--band:290px}
+  #activity h2{font-size:18px}
+  #activity label.answer{font-size:16px}
+}
+
+/* Documents library (b11-library.js): same palette and type as the course */
+.lib{display:flex;flex-direction:column;gap:22px}
+.lib-intro{font-size:15px;color:#587268;margin:0}
+.lib-head{font-size:19px;font-weight:600;color:#213438;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;border-bottom:1px solid #d3dbd1;padding-bottom:8px}
+.lib-head span{font-size:14px;font-weight:400;color:#587268}
+.lib-sub{font-size:15px;font-weight:600;color:#4a6b65;margin:14px 0 8px;letter-spacing:.04em;text-transform:uppercase}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.lib-card{border:1px solid #d3dbd1;border-radius:12px;background:#fffdf8;padding:14px 16px;display:flex;flex-direction:column;gap:12px;justify-content:space-between}
+.lib-kind{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#587268}
+.lib-card h3{font-size:16px;line-height:1.3;margin:4px 0 6px;font-weight:600}
+.lib-card p,.lib-row p{font-size:14px;line-height:1.45;color:#4b625f;margin:0}
+.lib-actions{display:flex;gap:8px;flex-wrap:wrap}
+.lib-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 14px;border:1px solid #cdd5d1;border-radius:9px;background:#fffdf8;color:#24464a;font:inherit;font-size:14px;text-decoration:none;cursor:pointer}
+.lib-btn:hover{background:#e7efeb;border-color:#62938c}
+.lib-btn.primary{background:#245f61;color:#fff;border-color:#245f61}
+.lib-btn.primary:hover{background:#194749}
+.lib-list{display:flex;flex-direction:column;gap:8px}
+.lib-row{display:flex;gap:14px;align-items:center;justify-content:space-between;border:1px solid #e1e5dd;border-radius:10px;padding:10px 14px;background:#fffefb}
+.lib-row h4{font-size:15px;font-weight:600;margin:0 0 3px;line-height:1.3}
+.lib-row .lib-btn{flex:none}
+.lib-empty{font-size:15px;color:#587268;margin:0}
+.lib-foot{font-size:14px;margin:0}
+.lib-back{margin:0 0 16px;min-height:40px;padding:8px 14px;border-radius:9px;border:1px solid #cdd5d1;background:#fffdf8;font:inherit;font-size:14px;cursor:pointer}
+#reader-body .reader-document{margin-top:0}
+@media (max-width:640px){.lib-row{flex-direction:column;align-items:stretch}.lib-grid{grid-template-columns:1fr}
+  .reader-document{padding:18px}.reader-document dl{grid-template-columns:1fr}.reader-document dt{padding-bottom:2px;border-bottom:0;color:#587268;font-size:14px}.reader-document dd{padding-top:0}
+  dialog{padding:14px}.dialog-top{margin-bottom:14px}.dialog-top h2{font-size:19px}}
