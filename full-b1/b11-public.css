@@ -61,6 +61,14 @@ main{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   dialog{width:96vw;padding:16px;max-height:90dvh}
   #reader-body .contents-grid{grid-template-columns:1fr}
 }
+/* Short landscape screens (phones held sideways, ≤ 520 px high): the stage keeps the laptop composition but gets
+   enough height for documents and captions; the page scrolls vertically instead of clipping. */
+@media (max-height:520px) and (orientation:landscape){
+  main{height:auto;min-height:0;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+  #stage{flex:none;height:470px;min-height:470px;max-height:none}
+  #captions{min-height:0}
+}
+
 /* Bram's workshop (S05): full-bleed photo composition becomes a framed picture with its notes beneath */
 @media (max-width:900px) and (orientation:portrait){
   main #stage#stage.bram-workshop-scene #visual{position:static;inset:auto;padding:10px}
