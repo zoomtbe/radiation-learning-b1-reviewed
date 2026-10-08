@@ -92,7 +92,7 @@
   }
   function finishLesson(){
     stop();auto=false;phase='complete';const nx=COURSE.lessons[li+1];
-    reader(`${lesson().id} completed`,`<div class="lesson-finish"><p>Your notes and progress are saved in this browser.</p>${nx?`<button id="open-next-lesson" class="primary">Continue to ${esc(nx.id)} · ${esc(nx.title)}</button>`:'<p>This is the end of lesson B1.1. The following lessons of B1 are published after review.</p>'}<button id="review-lesson">Review this lesson</button></div>`);
+    reader(`${lesson().id} completed`,`<div class="lesson-finish"><p>Your notes and progress are saved in this browser.</p>${nx?`<button id="open-next-lesson" class="primary">Continue to ${esc(nx.id)} · ${esc(nx.title)}</button>`:'<p>You have reached the end of B1.</p>'}<button id="review-lesson">Review this lesson</button></div>`);
     if(nx)$('open-next-lesson').onclick=()=>{returnPlaying=false;$('reader').close();navigate(li+1,0,false);};
     $('review-lesson').onclick=()=>{returnPlaying=false;$('reader').close();navigate(li,0,false);};
   }
